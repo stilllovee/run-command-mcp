@@ -23,7 +23,7 @@ A Model Context Protocol (MCP) server that provides command execution capabiliti
   "mcpServers": {
     "run-command": {
       "command": "npx",
-      "args": ["github:stilllovee/run-command-mcp-server"]
+      "args": ["github:stilllovee/run-command-mcp"]
     }
   }
 }
@@ -48,7 +48,7 @@ Or use locally after cloning:
         "run-command": {
             "type": "stdio",
             "command": "npx",
-            "args": ["github:stilllovee/run-command-mcp-server"]
+            "args": ["github:stilllovee/run-command-mcp"]
         },
     },
     "inputs": []
