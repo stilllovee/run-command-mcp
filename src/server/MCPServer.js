@@ -45,12 +45,7 @@ class MCPServer {
               properties: {
                 command: {
                   type: 'string',
-                  description: 'The command to execute (e.g., "echo", "ls", "git")',
-                },
-                args: {
-                  type: 'array',
-                  items: { type: 'string' },
-                  description: 'Arguments to pass to the command (optional)',
+                  description: 'The full command to execute (e.g., "echo hello world", "npm install", "git status")',
                 },
                 timeout: {
                   type: 'number',
@@ -68,12 +63,7 @@ class MCPServer {
               properties: {
                 command: {
                   type: 'string',
-                  description: 'The command to execute',
-                },
-                args: {
-                  type: 'array',
-                  items: { type: 'string' },
-                  description: 'Arguments to pass to the command (optional)',
+                  description: 'The full command to execute (e.g., "node server.js", "npm run dev", "func start")',
                 },
                 timeout: {
                   type: 'number',
@@ -154,11 +144,11 @@ class MCPServer {
       try {
 
         if (name === 'run_command') {
-          return await this.commandRunner.runCommand(args.command, args.args || [], args.timeout || 30000);
+          return await this.commandRunner.runCommand(args.command, args.timeout || 30000);
         }
 
         if (name === 'start_command') {
-          return await this.commandRunner.startCommand(args.command, args.args || [], args.timeout || 0);
+          return await this.commandRunner.startCommand(args.command, args.timeout || 0);
         }
 
         if (name === 'get_command_output') {

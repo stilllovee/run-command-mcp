@@ -13,15 +13,16 @@ class CommandRunner {
   /**
    * Start a command asynchronously (non-blocking)
    * Returns a process_id to check status/output later
+   * @param {string} command - Full command string to execute (e.g., "npm install", "node server.js")
+   * @param {number} timeout - Timeout in milliseconds (0 = no timeout)
    */
-  async startCommand(command, args = [], timeout = 0) {
+  async startCommand(command, timeout = 0) {
     const processId = uuidv4();
-    console.log('[MCP Server] Starting async command:', processId, command, args);
+    console.log('[MCP Server] Starting async command:', processId, command);
 
     const processInfo = {
       id: processId,
       command: command,
-      args: args,
       status: 'running',
       stdout: '',
       stderr: '',
@@ -34,7 +35,7 @@ class CommandRunner {
 
     this.processes.set(processId, processInfo);
 
-    const child = spawn(command, args, { shell: true });
+    const child = spawn(command, [], { shell: true });
     processInfo.pid = child.pid;
 
     // Set timeout if specified
@@ -80,7 +81,6 @@ class CommandRunner {
             process_id: processId,
             pid: child.pid,
             command: command,
-            args: args,
             status: 'running',
             message: 'Command started. Use get_output with this process_id to check status and logs.'
           }, null, 2),
@@ -132,7 +132,6 @@ class CommandRunner {
             process_id: processId,
             pid: processInfo.pid,
             command: processInfo.command,
-            args: processInfo.args,
             status: processInfo.status,
             exit_code: processInfo.exit_code,
             stdout: stdout.trim(),
@@ -157,7 +156,6 @@ class CommandRunner {
       process_id: p.id,
       pid: p.pid,
       command: p.command,
-      args: p.args,
       status: p.status,
       started_at: p.started_at,
       finished_at: p.finished_at
@@ -313,17 +311,19 @@ class CommandRunner {
   }
 
   /**
-   * Run a command synchronously (blocking) - original behavior
+   * Run a command synchronously (blocking)
+   * @param {string} command - Full command string to execute (e.g., "npm install", "echo hello world")
+   * @param {number} timeout - Timeout in milliseconds (default: 30000)
    */
-  async runCommand(command, args = [], timeout = 30000) {
-    console.log('[MCP Server] Running command (sync):', command, args);
+  async runCommand(command, timeout = 30000) {
+    console.log('[MCP Server] Running command (sync):', command);
 
     return new Promise((resolve) => {
       let stdout = '';
       let stderr = '';
       let timedOut = false;
 
-      const child = spawn(command, args, { shell: true });
+      const child = spawn(command, [], { shell: true });
 
       const timeoutId = setTimeout(() => {
         timedOut = true;
@@ -351,8 +351,7 @@ class CommandRunner {
                 stdout: stdout.trim(),
                 stderr: stderr.trim(),
                 timed_out: timedOut,
-                command: command,
-                args: args
+                command: command
               }, null, 2),
             },
           ],
@@ -372,8 +371,7 @@ class CommandRunner {
                 stdout: stdout.trim(),
                 stderr: stderr.trim(),
                 error: error.message,
-                command: command,
-                args: args
+                command: command
               }, null, 2),
             },
           ],

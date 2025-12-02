@@ -103,15 +103,13 @@ The server will be available at: `http://localhost:8123/mcp`
 Run a custom shell command synchronously and return the output (stdout, stderr, exit code). Blocks until command completes.
 
 **Parameters:**
-- `command` (required): The command to execute (e.g., "echo", "ls", "git")
-- `args` (optional): Array of arguments to pass to the command
+- `command` (required): The full command to execute (e.g., "echo hello world", "npm install", "git status")
 - `timeout` (optional): Timeout in milliseconds (default: 30000)
 
 **Example:**
 ```json
 {
-  "command": "echo",
-  "args": ["hello", "world"],
+  "command": "echo hello world",
   "timeout": 5000
 }
 ```
@@ -120,15 +118,13 @@ Run a custom shell command synchronously and return the output (stdout, stderr, 
 Start a command asynchronously (non-blocking). Returns a process_id to check status and output later.
 
 **Parameters:**
-- `command` (required): The command to execute
-- `args` (optional): Array of arguments to pass to the command
+- `command` (required): The full command to execute (e.g., "node server.js", "npm run dev")
 - `timeout` (optional): Timeout in milliseconds. 0 means no timeout (default: 0)
 
 **Example:**
 ```json
 {
-  "command": "node",
-  "args": ["server.js"],
+  "command": "node server.js",
   "timeout": 0
 }
 ```
