@@ -56,7 +56,7 @@ class MCPServer {
           //   },
           // },
           {
-            name: 'start_command',
+            name: 'start_async_command',
             description: 'Start a command asynchronously (non-blocking). Returns a process_id to check status and output later using get_command_output.',
             inputSchema: {
               type: 'object',
@@ -143,11 +143,11 @@ class MCPServer {
 
       try {
 
-        if (name === 'run_command') {
-          return await this.commandRunner.runCommand(args.command, args.timeout || 30000);
-        }
+        // if (name === 'run_command') {
+        //   return await this.commandRunner.runCommand(args.command, args.timeout || 30000);
+        // }
 
-        if (name === 'start_command') {
+        if (name === 'start_async_command') {
           return await this.commandRunner.startCommand(args.command, args.timeout || 0);
         }
 
@@ -159,13 +159,13 @@ class MCPServer {
           return await this.commandRunner.listProcesses(args.status || null);
         }
 
-        if (name === 'kill_process') {
-          return await this.commandRunner.killProcess(args.process_id);
-        }
+        // if (name === 'kill_process') {
+        //   return await this.commandRunner.killProcess(args.process_id);
+        // }
 
-        if (name === 'clear_processes') {
-          return await this.commandRunner.clearProcesses(args.process_id || null);
-        }
+        // if (name === 'clear_processes') {
+        //   return await this.commandRunner.clearProcesses(args.process_id || null);
+        // }
       } catch (error) {
         console.error(`[MCP Server] Error executing tool ${name}:`, error);
         throw new Error(`Tool execution failed: ${error.message}`);
