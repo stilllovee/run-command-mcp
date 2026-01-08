@@ -37,24 +37,24 @@ class MCPServer {
     this.server.setRequestHandler(ListToolsRequestSchema, async () => {
       return {
         tools: [
-          {
-            name: 'run_command',
-            description: 'Run a custom shell command synchronously and return the output (stdout, stderr, exit code). Blocks until command completes.',
-            inputSchema: {
-              type: 'object',
-              properties: {
-                command: {
-                  type: 'string',
-                  description: 'The full command to execute (e.g., "echo hello world", "npm install", "git status")',
-                },
-                timeout: {
-                  type: 'number',
-                  description: 'Timeout in milliseconds (default: 30000)',
-                },
-              },
-              required: ['command'],
-            },
-          },
+          // {
+          //   name: 'run_command',
+          //   description: 'Run a custom shell command synchronously and return the output (stdout, stderr, exit code). Blocks until command completes.',
+          //   inputSchema: {
+          //     type: 'object',
+          //     properties: {
+          //       command: {
+          //         type: 'string',
+          //         description: 'The full command to execute (e.g., "echo hello world", "npm install", "git status")',
+          //       },
+          //       timeout: {
+          //         type: 'number',
+          //         description: 'Timeout in milliseconds (default: 30000)',
+          //       },
+          //     },
+          //     required: ['command'],
+          //   },
+          // },
           {
             name: 'start_command',
             description: 'Start a command asynchronously (non-blocking). Returns a process_id to check status and output later using get_command_output.',
@@ -105,34 +105,34 @@ class MCPServer {
               required: [],
             },
           },
-          {
-            name: 'kill_process',
-            description: 'Kill a running process by process_id',
-            inputSchema: {
-              type: 'object',
-              properties: {
-                process_id: {
-                  type: 'string',
-                  description: 'The process ID to kill',
-                },
-              },
-              required: ['process_id'],
-            },
-          },
-          {
-            name: 'clear_processes',
-            description: 'Clear finished processes from memory. If process_id is provided, clears that specific process. Otherwise clears all non-running processes.',
-            inputSchema: {
-              type: 'object',
-              properties: {
-                process_id: {
-                  type: 'string',
-                  description: 'Specific process ID to clear (optional)',
-                },
-              },
-              required: [],
-            },
-          },
+          // {
+          //   name: 'kill_process',
+          //   description: 'Kill a running process by process_id',
+          //   inputSchema: {
+          //     type: 'object',
+          //     properties: {
+          //       process_id: {
+          //         type: 'string',
+          //         description: 'The process ID to kill',
+          //       },
+          //     },
+          //     required: ['process_id'],
+          //   },
+          // },
+          // {
+          //   name: 'clear_processes',
+          //   description: 'Clear finished processes from memory. If process_id is provided, clears that specific process. Otherwise clears all non-running processes.',
+          //   inputSchema: {
+          //     type: 'object',
+          //     properties: {
+          //       process_id: {
+          //         type: 'string',
+          //         description: 'Specific process ID to clear (optional)',
+          //       },
+          //     },
+          //     required: [],
+          //   },
+          // },
         ],
       };
     });
