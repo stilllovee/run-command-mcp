@@ -72,6 +72,9 @@ class CommandRunner {
       processInfo.finished_at = new Date().toISOString();
     });
 
+    //delay 30s before returning
+    await new Promise(resolve => setTimeout(resolve, 30000));
+
     return {
       content: [
         {
